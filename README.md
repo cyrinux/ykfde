@@ -11,6 +11,7 @@ Requirements
 
 To compile and use yubico full disk encryption you need:
 
+#### For ArchLinux:
 * [yubikey-personalization](https://github.com/Yubico/yubikey-personalization)
 * [iniparser](http://ndevilla.free.fr/iniparser/)
 * [systemd](http://www.freedesktop.org/wiki/Software/systemd/)
@@ -23,6 +24,15 @@ To compile and use yubico full disk encryption you need:
 Additionally it is expected to have `make` and `pkg-config` around to
 successfully compile.
 
+#### For Fedora
+* [systemd]
+* [ykpers-devel]
+* [libyubikey-devel]
+* [cryptsetup-devel]
+* [iniparser-devel]
+* [python-markdown]
+* [libarchive-devel]
+
 Build and install
 -----------------
 
@@ -33,6 +43,10 @@ Building and installing is very easy. Just run:
 followed by:
 
 > make install
+
+or for systemd/dracut:
+
+> make install-dracut
 
 This will place files to their desired places in filesystem.
 
@@ -72,7 +86,8 @@ Now you have two choices. Use *either of both* hooks, depending on whether
 you want to update challenge/response on every boot (`ykfde-cpio`) or
 not (`ykfde`).
 
-### `ykfde` hook
+### ArchLinux
+#### `ykfde` hook
 
 Last add `ykfde` to your hook list in `/etc/mkinitcpio.conf` and rebuild
 your initramfs with:
@@ -81,25 +96,39 @@ your initramfs with:
 
 Reboot and have fun!
 
-### `ykfde-cpio` hook
+#### `ykfde-cpio` hook
 
 Add `ykfde-cpio` to your hook list in `/etc/mkinitcpio.conf` and rebuild
 your initramfs with:
 
 > mkinitcpio -p linux
 
+### Fedora
+> dracut -f
+
+check if the needed files are in place of initrd:
+> lsinitrd | grep ykfde
+
 Additionally enable `systemd` service `ykfde-cpio.service` and make your
 bootloader load the new `cpio` image `/boot/ykfde-challenges.img` (in
 addition to your usual initramfs).
+
+#### ykfde-cpio: GRUB
+Add a additional initramfs to grub with stored challenges.
+run once
+> ykfde-cpio
+
+This collects the challenges and stores it in /boot/ykfde-challenges.img
+Now add the initrd (ykfde-challenges.img) to /boot/grub2/grub.cfg (carefully with EFI)
+initrd /initramfs-XXXX /ykfde-challenges.img
 
 Reboot and have fun!
 
 Limitation / TODO
 -----------------
 
-* At the moment this is specific to Arch Linux. Though everything should
-  run with upstream `systemd` just fine anybody has to hook things up with
-  [dracut](https://dracut.wiki.kernel.org/) or whatever.
+* 2FA is at the moment not available.
+* Every Time the mkconfig-grub is run, the changes in the bootloader are gone.
 
 ### Upstream
 
