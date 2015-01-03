@@ -42,7 +42,7 @@ install-mkinitcpio: install-bin install-doc
 	$(INSTALL) -D -m0644 mkinitcpio/ykfde-cpio $(DESTDIR)/usr/lib/initcpio/install/ykfde-cpio
 
 install-dracut: install-bin install-doc
-	# porting to dracut? install your files here.
+	$(INSTALL) -d -m0755 $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/
 	$(INSTALL) -t $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/ systemd/90ykfde/module-setup.sh systemd/90ykfde/ykfde.sh systemd/90ykfde/parse-mod.sh
 
 clean:
