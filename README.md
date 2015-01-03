@@ -1,4 +1,4 @@
-mkinitcpio-ykfde
+ykfde
 ================
 
 **Full disk encryption with Yubikey (Yubico key)**
@@ -120,7 +120,8 @@ run once
 
 This collects the challenges and stores it in /boot/ykfde-challenges.img
 Now add the initrd (ykfde-challenges.img) to /boot/grub2/grub.cfg (carefully with EFI)
-initrd /initramfs-XXXX /ykfde-challenges.img
+
+`initrd /initramfs-XXXX /ykfde-challenges.img`
 
 Reboot and have fun!
 
