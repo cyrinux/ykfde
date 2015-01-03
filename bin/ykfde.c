@@ -11,6 +11,7 @@
 #ifndef _DEFAULT_SOURCE
 #define _DEFAULT_SOURCE
 #endif
+#define _XOPEN_SOURCE 600
 
 #include <fcntl.h>
 #include <stdio.h>

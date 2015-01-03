@@ -43,6 +43,7 @@ install-mkinitcpio: install-bin install-doc
 
 install-dracut: install-bin install-doc
 	# porting to dracut? install your files here.
+	$(INSTALL) -t $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/ systemd/90ykfde/module-setup.sh systemd/90ykfde/ykfde.sh systemd/90ykfde/parse-mod.sh
 
 clean:
 	$(MAKE) -C bin clean
@@ -50,5 +51,5 @@ clean:
 	$(RM) -f README.html
 
 release:
-	git archive --format=tar.xz --prefix=mkinitcpio-ykfde-$(VERSION)/ $(VERSION) > mkinitcpio-ykfde-$(VERSION).tar.xz
-	gpg -ab mkinitcpio-ykfde-$(VERSION).tar.xz
+	git archive --format=tar.gz --prefix=mkinitcpio-ykfde-$(VERSION)/ $(VERSION) > mkinitcpio-ykfde-$(VERSION).tar.gz
+	gpg -ab mkinitcpio-ykfde-$(VERSION).tar.gz
