@@ -1,5 +1,5 @@
 /*
- * (C) 2014 by Christian Hesse <mail@eworm.de>
+ * (C) 2014-2015 by Christian Hesse <mail@eworm.de>
  *
  * This software may be used and distributed according to the terms
  * of the GNU General Public License, incorporated herein by reference.
@@ -8,8 +8,11 @@
  * $ gcc -o ykfde ykfde.c -lykpers-1 -lyubikey -lcryptsetup -liniparser
  */
 
-#ifndef _DEFAULT_SOURCE
-#define _DEFAULT_SOURCE
+#ifndef _XOPEN_SOURCE
+#	define _XOPEN_SOURCE
+#	ifndef _XOPEN_SOURCE_EXTENDED
+#		define _XOPEN_SOURCE_EXTENDED
+#	endif
 #endif
 #define _XOPEN_SOURCE 600
 

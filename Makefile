@@ -40,10 +40,13 @@ install-doc: README.md README.html
 install-mkinitcpio: install-bin install-doc
 	$(INSTALL) -D -m0644 mkinitcpio/ykfde $(DESTDIR)/usr/lib/initcpio/install/ykfde
 	$(INSTALL) -D -m0644 mkinitcpio/ykfde-cpio $(DESTDIR)/usr/lib/initcpio/install/ykfde-cpio
+	$(INSTALL) -D -m0644 udev/20-ykfde.rules $(DESTDIR)/usr/lib/initcpio/udev/20-ykfde.rules
 
 install-dracut: install-bin install-doc
-	$(INSTALL) -d -m0755 $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/
-	$(INSTALL) -t $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/ systemd/90ykfde/module-setup.sh systemd/90ykfde/ykfde.sh systemd/90ykfde/parse-mod.sh
+	$(INSTALL) -D -m0755 dracut/module-setup.sh $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/module-setup.sh
+	$(INSTALL) -D -m0755 dracut/parse-mod.sh $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/parse-mod.sh
+	$(INSTALL) -D -m0755 dracut/ykfde.sh $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/ykfde.sh
+	$(INSTALL) -D -m0644 udev/20-ykfde.rules $(DESTDIR)/usr/lib/dracut/modules.d/90ykfde/20-ykfde.rules
 
 clean:
 	$(MAKE) -C bin clean
@@ -51,5 +54,7 @@ clean:
 	$(RM) -f README.html
 
 release:
+	git archive --format=tar.xz --prefix=mkinitcpio-ykfde-$(VERSION)/ $(VERSION) > mkinitcpio-ykfde-$(VERSION).tar.xz
+	gpg -ab mkinitcpio-ykfde-$(VERSION).tar.xz
 	git archive --format=tar.gz --prefix=mkinitcpio-ykfde-$(VERSION)/ $(VERSION) > mkinitcpio-ykfde-$(VERSION).tar.gz
 	gpg -ab mkinitcpio-ykfde-$(VERSION).tar.gz
