@@ -8,12 +8,12 @@
  * $ gcc -o mkcpio mkcpio.c -larchive
  */
 
-#ifndef _XOPEN_SOURCE
+/* #ifndef _XOPEN_SOURCE
 #	define _XOPEN_SOURCE
 #	ifndef _XOPEN_SOURCE_EXTENDED
 #		define _XOPEN_SOURCE_EXTENDED
 #	endif
-#endif
+#endif */
 #define _XOPEN_SOURCE 600
 
 #include <dirent.h>
