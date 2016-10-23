@@ -5,6 +5,10 @@ datarootdir="${prefix}/share"
 sysconfdir="/etc"
 grub_mkconfig_dir="${sysconfdir}/grub.d"
 
+# used by grub scripts - export it
+pkgdatadir="${datarootdir}/grub"
+export pkgdatadir
+
 source "${datarootdir}/grub/grub-mkconfig_lib"
 
 ykfde-cpio
